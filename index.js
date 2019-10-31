@@ -1,5 +1,9 @@
 "use strict"
 
+/**
+ * @summary  commonjs导出模块
+ */
+
 const getTree = require("./lib/getDirTree");
 const buildTreeStr = require("./lib/buildTreeString");
 
