@@ -1,13 +1,12 @@
 {
   "name": "sdtree",
   "version": "0.0.1",
-  "description": "",
+  "description": "目录树结构生成、获取",
   "main": "index.js",
-  "bin": {
-    "sdtree": "commander/sdtree.js"
-  },
   "directories": {
-    "lib": "lib"
+    "doc": "doc",
+    "lib": "lib",
+    "test": "test"
   },
   "dependencies": {
     "commander": "^3.0.2"
@@ -16,6 +15,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lilindog/sdtree.git"
+  },
+  "keywords": [
+    "dir",
+    "tree"
+  ],
+  "author": "lilindog",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lilindog/sdtree/issues"
+  },
+  "homepage": "https://github.com/lilindog/sdtree#readme"
 }

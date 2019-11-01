@@ -14,20 +14,20 @@ const {print} = require("../lib/tools");
 
 p
 .version("dscan v0.0.1")
-.option("-i, --input    <input>", "扫描目录路径, 缺省为当前目录")
+.option("-d, --dir    <dir>", "扫描目录路径, 缺省为当前目录")
 .option("-o, --output   <output>", "目录树输出文件")
 .option("-c, --comment  <comment>", "要提取的文件注释名字")
 .option("-e, --excludes <exculudes>", "忽略文件/目录;多个请使用半角逗号分隔，之间不能有空格")
 .parse(process.argv);
 
 const param = {
-    input: process.cwd(),
+    dir: process.cwd(),
     output: "",
     comment: "",
     excludes: []
 }
 
-p.input && (param.input = p.input);
+p.dir && (param.dir = p.dir);
 p.output && (param.output = p.output);
 p.comment && (param.comment = p.comment);
 p.excludes && (param.excludes = p.excludes.split(","));
@@ -35,7 +35,7 @@ p.excludes && (param.excludes = p.excludes.split(","));
 print("正在处理...\n");
 
 const 
-json = getTree(param.input, {exclude: param.excludes, comment: param.comment}),
+json = getTree(param.dir, {exclude: param.excludes, comment: param.comment}),
 treeStr = buildTree(json.tree[Object.keys(json.tree)[0]]);
 
 print("处理完成！\n");
@@ -47,6 +47,5 @@ if (!param.output) {
     print (treeStr);
 } else {
     fs.writeFileSync(param.output, treeStr);
-    print(`结果已保存至 ${param.output}!`);
+    print(`结果已保存至 ${path.resolve(param.output)}`);
 }
-
