@@ -6,7 +6,8 @@
 
 ## 命令行
 
-*首先要安装该工具，执行 npm install sdtree -g*
+首先要安装该工具
+> npm install -g git+https://github.com/lilindog/sdtree#master
 
 命令行参数：
 >-d, --input    \<dir>        扫描目录路径, 缺省为当前目录<br>
