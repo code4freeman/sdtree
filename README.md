@@ -17,28 +17,28 @@
 示例：<br>
 $ sdtree -d E:\Documents\Desktop\sdtree -c summary -e node_modules,.git
 ```js
-正在处理...<br>
-处理完成！<br>
-目录最大深度:    2层<br>
-目录数量:       6个<br>
-文件数量:       11个<br>
-sdtree<br>
-|-- .gitignore<br>
-|-- commander<br>
-|   ┕-- sdtree.js 命令行处理<br>
-|-- doc<br>
-|   ┕-- img<br>
-|       ┕-- img1.png<br>
-|-- index.js commonjs导出模块<br>
-|-- lib<br>
-|   |-- buildTreeString.js 根据目录树json 生成目录树字符串表示<br>
-|   |-- getDirTree.js 获取目录树json结构<br>
-|   ┕-- tools.js 工具<br>
-|-- package-lock.json<br>
-|-- package.json<br>
-|-- README.md<br>
-┕-- test<br>
-    ┕-- test.js 测试<br>
+正在处理...
+处理完成！
+目录最大深度:    2层
+目录数量:       6个
+文件数量:       11个
+sdtree
+|-- .gitignore
+|-- commander
+|   ┕-- sdtree.js 命令行处理
+|-- doc
+|   ┕-- img
+|       ┕-- img1.png
+|-- index.js commonjs导出模块
+|-- lib
+|   |-- buildTreeString.js 根据目录树json 生成目录树字符串表示
+|   |-- getDirTree.js 获取目录树json结构
+|   ┕-- tools.js 工具
+|-- package-lock.json
+|-- package.json
+|-- README.md
+┕-- test
+    ┕-- test.js 测试
 ```
 ## nodejs调用(api)
 
