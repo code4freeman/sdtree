@@ -16,7 +16,8 @@
 
 示例：<br>
 $ sdtree -d E:\Documents\Desktop\sdtree -c summary -e node_modules,.git
->正在处理...<br>
+```js
+正在处理...<br>
 处理完成！<br>
 目录最大深度:    2层<br>
 目录数量:       6个<br>
@@ -38,7 +39,7 @@ sdtree<br>
 |-- README.md<br>
 ┕-- test<br>
     ┕-- test.js 测试<br>
-
+```
 ## nodejs调用(api)
 
 获取目录树字符串表示<br>
