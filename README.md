@@ -3,8 +3,107 @@
 ## 功能
 * 获取目录树字符串表示，可以附带指定文件注释
 * 获取目录树json格式
+* 
+获取目录树（字符串表示）：
+```js
+sdtree
+│── .gitignore
+│── commander
+│   └── sdtree.js
+│── index.js
+│── lib
+│   │── buildTreeString.js
+│   │── getDirTree.js
+│   └── tools.js
+│── package-lock.json
+│── package.json
+│── README.md
+└── test
+    │── test.js
+    │── test.json
+    └── test.text
 
-## 命令行
+```
+获取目录树json：
+```js
+{
+    "sdtree": {
+        "name": "sdtree",
+        "type": "dir",
+        "childs": {
+            ".gitignore": {
+                "name": ".gitignore",
+                "type": "file"
+            },
+            "commander": {
+                "name": "commander",
+                "type": "dir",
+                "childs": {
+                    "sdtree.js": {
+                        "name": "sdtree.js",
+                        "type": "file"
+                    }
+                }
+            },
+            "index.js": {
+                "name": "index.js",
+                "type": "file"
+            },
+            "lib": {
+                "name": "lib",
+                "type": "dir",
+                "childs": {
+                    "buildTreeString.js": {
+                        "name": "buildTreeString.js",
+                        "type": "file"
+                    },
+                    "getDirTree.js": {
+                        "name": "getDirTree.js",
+                        "type": "file"
+                    },
+                    "tools.js": {
+                        "name": "tools.js",
+                        "type": "file"
+                    }
+                }
+            },
+            "package-lock.json": {
+                "name": "package-lock.json",
+                "type": "file"
+            },
+            "package.json": {
+                "name": "package.json",
+                "type": "file"
+            },
+            "README.md": {
+                "name": "README.md",
+                "type": "file"
+            },
+            "test": {
+                "name": "test",
+                "type": "dir",
+                "childs": {
+                    "test.js": {
+                        "name": "test.js",
+                        "type": "file"
+                    },
+                    "test.json": {
+                        "name": "test.json",
+                        "type": "file"
+                    },
+                    "test.text": {
+                        "name": "test.text",
+                        "type": "file"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+
+## 命令行用法
 
 首先要安装该工具
 > npm install -g git+https://github.com/lilindog/sdtree#master
@@ -20,28 +119,28 @@ $ sdtree -d E:\Documents\Desktop\sdtree -c summary -e node_modules,.git
 ```js
 正在处理...
 处理完成！
-目录最大深度:    2层
-目录数量:       6个
-文件数量:       11个
+目录最大深度:    1层
+目录数量:       4个
+文件数量:       12个
 sdtree
-|-- .gitignore
-|-- commander
-|   ┕-- sdtree.js 命令行处理
-|-- doc
-|   ┕-- img
-|       ┕-- img1.png
-|-- index.js commonjs导出模块
-|-- lib
-|   |-- buildTreeString.js 根据目录树json 生成目录树字符串表示
-|   |-- getDirTree.js 获取目录树json结构
-|   ┕-- tools.js 工具
-|-- package-lock.json
-|-- package.json
-|-- README.md
-┕-- test
-    ┕-- test.js 测试
+│── .gitignore
+│── commander
+│   └── sdtree.js
+│── index.js
+│── lib
+│   │── buildTreeString.js
+│   │── getDirTree.js
+│   └── tools.js
+│── package-lock.json
+│── package.json
+│── README.md
+└── test
+    │── test.js
+    │── test.json
+    └── test.text
+
 ```
-## nodejs调用(api)
+## nodejs调用(api)用法
 
 获取目录树字符串表示<br>
 *getTreeStr(path[,options])*<br>
