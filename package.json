@@ -1,6 +1,6 @@
 {
   "name": "sdtree",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "目录树结构生成、获取",
   "main": "index.js",
   "bin": {
