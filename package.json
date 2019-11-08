@@ -1,8 +1,11 @@
 {
   "name": "sdtree",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "目录树结构生成、获取",
   "main": "index.js",
+  "bin": {
+    "sdtree": "./commander/sdtree.js"
+  },
   "directories": {
     "doc": "doc",
     "lib": "lib",
