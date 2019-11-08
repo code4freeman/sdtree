@@ -163,5 +163,3 @@ res = sdtree.getTreeJSON("./dirpath", {exclude:["node_modules"], comment: "summa
 
 console.log(res.tree);
 ```
-
->>
