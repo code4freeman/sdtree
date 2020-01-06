@@ -112,10 +112,10 @@ sdtree
 >-d, --input    \<dir>        扫描目录路径, 缺省为当前目录<br>
 >-o, --output   \<output>     目录树输出文件, 缺省会吧目录树信息打印到屏幕<br>
 >-c, --comment  \<comment>    要提取的文件注释名字<br>
->-e, --excludes \<exculudes>  忽略文件/目录; 多个请使用半角逗号分隔，之间不能有空格
+>-e, --excludes \<exculudes>  忽略文件/目录; 多个请使用 “+” 分隔，之间不能有空格
 
 示例：<br>
-$ sdtree -d E:\Documents\Desktop\sdtree -c summary -e node_modules,.git
+$ sdtree -d E:\Documents\Desktop\sdtree -c summary -e node_modules+.git
 ```js
 正在处理...
 处理完成！

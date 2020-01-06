@@ -30,7 +30,7 @@ const param = {
 p.dir && (param.dir = p.dir);
 p.output && (param.output = p.output);
 p.comment && (param.comment = p.comment);
-p.excludes && (param.excludes = p.excludes.split(","));
+p.excludes && (param.excludes = p.excludes.split("+"));
 
 print("正在处理...\n");
 
