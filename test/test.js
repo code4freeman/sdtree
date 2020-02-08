@@ -6,7 +6,7 @@ const sdtree = require("../index");
 const fs = require("fs");
 
 const
-path = "../../sdtree", 
+path = "/", 
 options = {comment: "", exclude: [".git", "node_modules"]};
 
 fs.writeFileSync("test.text", sdtree.getTreeStr(path, options));
