@@ -1,10 +1,10 @@
 {
   "name": "sdtree",
-  "version": "0.0.7",
+  "version": "2.0.0",
   "description": "目录树结构生成、获取",
   "main": "index.js",
   "bin": {
-    "sdtree": "./commander/sdtree.js"
+    "sdtree": "./commander/index.js"
   },
   "directories": {
     "doc": "doc",
@@ -12,12 +12,10 @@
     "test": "test"
   },
   "dependencies": {
-    "commander": "^3.0.2"
+    "cmdhelper": "git+https://github.com/lilindog/cmdhelper.git"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lilindog/sdtree.git"
