@@ -5,6 +5,7 @@
  */
 
 const fs = require("fs");
+const $path = require("path");
 
 /**
  * 默认参数配置 
@@ -27,6 +28,7 @@ const defaultOptions = {
  * @return {String} 目录名
  */
 function getDirName (path) {
+	path = $path.resolve(path);
 	if (~path.indexOf("\/")) {
 		const arr = path.split("\/");
 		return arr[arr.length - 1];
