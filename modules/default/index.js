@@ -23,14 +23,14 @@ module.exports = {
         p.excludes && (param.excludes = p.excludes.split("+"));
         
         const doneLoading = ch.loading("正在扫描目录...");
-        
+
         const 
-        json = await exec("../modules/default/lib/getDirTreeAsyncScript.js", {
+        json = await exec(path.join(__dirname, "./lib/getDirTreeAsyncScript.js"), {
             dir: param.dir,
             options: {exclude: param.excludes, comment: param.comment}
         }),
-        treeStr = await exec("../modules/default/lib/buildTreeStringAsyncScript.js", json.tree[Object.keys(json.tree)[0]]);
-        
+        treeStr = await exec(path.join(__dirname, "./lib/buildTreeStringAsyncScript.js"), json.tree[Object.keys(json.tree)[0]]);
+
         doneLoading("扫描完成 ok");
         
         console.log(`目录最大深度:    ${json.maxDeep}层`);
