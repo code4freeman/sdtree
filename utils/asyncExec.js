@@ -1,11 +1,11 @@
 const { fork } = require("child_process");
 
-class AsyncScriptMessage {
+class Message {
     constructor (cmd = "", data = {}) {
         this.cmd = cmd;
         this.data = data;
     }
-}   
+}
 
 class AsyncScript {
     constructor (action) {
@@ -13,7 +13,7 @@ class AsyncScript {
         if (typeof action !== "function") throw `参数必须为函数，且要有返回`;
         this._action = action;
         this._startListenMessage();
-        process.send(new AsyncScriptMessage(exec.listenMessageTypes.LOADED));
+        process.send(new Message(exec.listenMessageTypes.LOADED));
     }
     async _execAction (data) {
         let res = null;
@@ -22,7 +22,7 @@ class AsyncScript {
         } catch(err) {
             throw `AsyncScript 出错：${err}`;
         }
-        process.send(new AsyncScriptMessage(exec.listenMessageTypes.DONE, res));
+        process.send(new Message(exec.listenMessageTypes.DONE, res));
     }
     _startListenMessage () {
         process.on("message", ({cmd, data}) => {
@@ -37,7 +37,7 @@ AsyncScript.listenMessageTypes = {
     ACTION: "ACTION"
 }
 
-async function exec (scriptpath, params = {}) {
+function exec (scriptpath, params = {}, subscribes = {}) {
     let resolve, reject;
     const promise = new Promise((res, rej) => {
         resolve = res;
@@ -48,7 +48,7 @@ async function exec (scriptpath, params = {}) {
     cp.on("message", ({cmd, data}) => {
         switch (cmd) {
             case exec.listenMessageTypes.LOADED:
-                cp.send(new AsyncScriptMessage(AsyncScript.listenMessageTypes.ACTION, params));
+                cp.send(new Message(AsyncScript.listenMessageTypes.ACTION, params));
             break;
             case exec.listenMessageTypes.DONE:
                 resolve(data);

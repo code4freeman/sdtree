@@ -1,4 +1,5 @@
 const { asyncExec: { AsyncScript } } = require("../../../utils");
+const { Scan: { ScanNode : { types: scanNodeTypes } } } = require("filehelper");
 
 new AsyncScript(params => {
 
@@ -51,7 +52,7 @@ new AsyncScript(params => {
 
             Object.keys(tree.childs).forEach(key => {
                 const d = tree.childs[key];
-                if (d.type === "file") {
+                if (d.type === scanNodeTypes.FILE) {
                     deepStack[deepStack.length - 1].num ++;
                     if (d.comment) {
                         str += buildBeforeSpacing() + d.name + " " + d.comment + "\n";
@@ -59,7 +60,7 @@ new AsyncScript(params => {
                         str += buildBeforeSpacing() + d.name + "\n";
                     }
                 }
-                if (d.type === "dir") {
+                if (d.type === scanNodeTypes.DIR) {
                     deepStack[deepStack.length - 1].num ++;
                     str += buildBeforeSpacing() + d.name + "\n";
                     f(d);

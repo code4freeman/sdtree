@@ -22,20 +22,19 @@ module.exports = {
         p.comment && (param.comment = p.comment);
         p.excludes && (param.excludes = p.excludes.split("+"));
         
-        const doneLoading = ch.loading("正在扫描目录...");
+        const { stop:doneLoading, info }= ch.loading("正在扫描目录...");
 
         const 
-        json = await exec(path.join(__dirname, "./lib/getDirTreeAsyncScript.js"), {
+        { tree, maxDeep, fileNum, dirNum } = await exec(path.join(__dirname, "./lib/getDirTreeAsyncScript.js"), {
             dir: param.dir,
             options: {exclude: param.excludes, comment: param.comment}
         }),
-        treeStr = await exec(path.join(__dirname, "./lib/buildTreeStringAsyncScript.js"), json.tree[Object.keys(json.tree)[0]]);
-
+        treeStr = await exec(path.join(__dirname, "./lib/buildTreeStringAsyncScript.js"), tree);
         doneLoading("扫描完成 ok");
         
-        console.log(`目录最大深度:    ${json.maxDeep}层`);
-        console.log(`目录数量:       ${json.dirNum}个`);
-        console.log(`文件数量:       ${json.fileNum}个`);
+        console.log(`目录最大深度:    ${maxDeep}层`);
+        console.log(`目录数量:       ${dirNum}个`);
+        console.log(`文件数量:       ${fileNum}个`);
         
         if (!param.output) {
             console.log(treeStr);

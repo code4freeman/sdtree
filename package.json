@@ -12,7 +12,8 @@
     "test": "test"
   },
   "dependencies": {
-    "cmdhelper": "git+https://github.com/lilindog/cmdhelper.git"
+    "cmdhelper": "git+https://github.com/lilindog/cmdhelper.git",
+    "filehelper": "git+https://github.com/lilindog/filehelper.git"
   },
   "devDependencies": {},
   "scripts": {},
