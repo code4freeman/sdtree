@@ -12,12 +12,12 @@ new AsyncScript(async ({ dir, comment, excludes, depth }) => {
      * @param {String} filePtah
      * @return {String}
      */
-    function getComment (filePtah, comment) {
+    function getComment (filePath, comment) {
         const 
-        str = fs.readFileSync(filePtah).toString(),
-        reg =  new RegExp(`@${comment}\\s{0,}([^\\r\\n]+)(?=[\\r\\n])`, "g");
+        str = fs.readFileSync(filePath).toString(),
+        reg =  new RegExp(`${comment}\\s([^\\n]+)`);
         let res = reg.exec(str);
-        return Array.isArray(res) && res.length > 1 && res[1] && res[1] || "";
+        return Array.isArray(res) && res.length >= 2 ? res[1] : "";
     }
 
     const tree = new Tree({ dir, excludes, depth });
@@ -26,7 +26,10 @@ new AsyncScript(async ({ dir, comment, excludes, depth }) => {
             maxDeep = treeNode.deep;
         }
         if (treeNode.type === scanNodeTypes.FILE) {
-            comment && (treeNode.name += getComment(treeNode.path, comment));
+            if (comment) {
+                const cm = getComment(treeNode.path, comment);
+                cm && (treeNode.name += " //" + cm);
+            }
             fileNum++;
         }
         if (treeNode.type === scanNodeTypes.DIR) {
