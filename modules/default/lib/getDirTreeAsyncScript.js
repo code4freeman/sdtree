@@ -2,7 +2,7 @@ const { asyncExec: {AsyncScript} } = require("../../../utils/index");
 const { Tree, Scan: { ScanNode: { types: scanNodeTypes } } } = require("filehelper");
 const fs = require("fs");
 
-new AsyncScript(async params => {
+new AsyncScript(async ({ dir, comment, excludes, depth }) => {
 
     let maxDeep = 0, fileNum = 0, dirNum = 0;
 
@@ -19,13 +19,14 @@ new AsyncScript(async params => {
         let res = reg.exec(str);
         return Array.isArray(res) && res.length > 1 && res[1] && res[1] || "";
     }
-    const tree = new Tree({dir: params.dir, excludes: params.options.exclude});
+
+    const tree = new Tree({ dir, excludes, depth });
     tree.on("step", treeNode => {
         if (treeNode.deep > maxDeep) {
             maxDeep = treeNode.deep;
         }
         if (treeNode.type === scanNodeTypes.FILE) {
-            params.options.comment && (treeNode.name += getComment(treeNode.path, params.options.comment));
+            comment && (treeNode.name += getComment(treeNode.path, comment));
             fileNum++;
         }
         if (treeNode.type === scanNodeTypes.DIR) {
