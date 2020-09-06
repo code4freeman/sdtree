@@ -1,26 +1,28 @@
-const { asyncExec: {AsyncScript} } = require("../../../utils/index");
 const { Tree, Scan: { ScanNode: { types: scanNodeTypes } } } = require("filehelper");
 const fs = require("fs");
 
-new AsyncScript(async ({ dir, comment, excludes, depth }) => {
+let maxDeep = 0, fileNum = 0, dirNum = 0, tree = null;
 
-    let maxDeep = 0, fileNum = 0, dirNum = 0;
+/**
+ * 获取指定注释
+ * 
+ * @param {String} filePtah
+ * @return {String}
+ */
+function getComment (filePath, comment) {
+    const 
+    str = fs.readFileSync(filePath).toString(),
+    reg =  new RegExp(`${comment}\\s([^\\n]+)`);
+    let res = reg.exec(str);
+    return Array.isArray(res) && res.length >= 2 ? res[1] : "";
+}
 
-    /**
-     * 获取指定注释
-     * 
-     * @param {String} filePtah
-     * @return {String}
-     */
-    function getComment (filePath, comment) {
-        const 
-        str = fs.readFileSync(filePath).toString(),
-        reg =  new RegExp(`${comment}\\s([^\\n]+)`);
-        let res = reg.exec(str);
-        return Array.isArray(res) && res.length >= 2 ? res[1] : "";
-    }
-
-    const tree = new Tree({ dir, excludes, depth });
+/**
+ * 初始化tree
+ */
+function init (options) {
+    const { comment } = options;
+    tree = new Tree({...options, authSkip: false});
     tree.on("step", treeNode => {
         if (treeNode.deep > maxDeep) {
             maxDeep = treeNode.deep;
@@ -36,12 +38,25 @@ new AsyncScript(async ({ dir, comment, excludes, depth }) => {
             dirNum++;
         }
     });
-    const json = await tree.parse();
-    return {
-        tree: json,
-        maxDeep,
-        fileNum,
-        dirNum
-    }
+    tree.on("auth", node => {
+        process.send({cmd: "auth", data: node});
+    });
+}
 
+process.on("message", ({ cmd, data }) => {
+    ({
+        async exec (data) {
+            init(data);
+            const json = await tree.parse();
+            process.send({cmd: "end", data: {
+                tree: json,
+                maxDeep,
+                fileNum,
+                dirNum
+            }}, () => process.exit(0));
+        },
+        resume (isAuthSkip = false) {
+            tree.resume(isAuthSkip);
+        }
+    })[cmd](data);
 });

@@ -1,7 +1,7 @@
 const ch = require("cmdhelper");
 const path = require("path");
 const fs = require("fs");
-const { asyncExec: {exec} } = require("../../utils");
+const { fork } = require("child_process");
 
 module.exports = {
     descripts: [
@@ -25,11 +25,53 @@ module.exports = {
         p.excludes && (param.excludes = p.excludes.split("+"));
         p.depth && (param.depth = p.depth);
         
-        const { stop:doneLoading }= ch.loading("正在扫描目录...");
+        let doneLoading = ch.loading("正在扫描目录...").stop;
 
         const 
-        { tree, maxDeep, fileNum, dirNum } = await exec(path.join(__dirname, "./lib/getDirTreeAsyncScript.js"), param),
-        treeStr = await exec(path.join(__dirname, "./lib/buildTreeStringAsyncScript.js"), tree);
+        { tree, maxDeep, fileNum, dirNum } = await new Promise((resolve, reject) => {
+            const cp = fork(__dirname + "/lib/getDirTreeAsyncScript.js");
+            let skipAll = false;
+            cp.on("message", ({cmd, data}) => {
+                ({
+                    end (res) {
+                        if (!res.tree.name) {
+                            res.tree.name = res.tree.path;
+                        }
+                        resolve(data);
+                    },
+                    async auth (node) {
+                        if (skipAll) return;
+                        doneLoading(`目录： "${node.path}" 没有权限，是否跳过？`);
+                        const { value } = await ch.select("（上下键选择，回车键确定）", [
+                            {label: "跳过当前目录", value: 1},
+                            {label: "跳过所有没有权限的目录", value: 2}
+                        ]);
+                        switch (value) {
+                            case 1: 
+                                cp.send({cmd: "resume", data: false});
+                            break;
+                            case 2:
+                                skipAll = true;
+                                cp.send({cmd: "resume", data: true});
+                        }
+                        doneLoading = ch.loading("正在扫描目录...").stop;
+                    }
+                })[cmd](data);
+            });
+            cp.send({cmd: "exec", data: param});
+        }),
+        treeStr = await new Promise((resolve, reject) => {
+            const cp = fork(__dirname + "/lib/buildTreeStringAsyncScript.js");
+            cp.on("message", ({cmd, data}) => {
+                ({
+                    end (data) {
+                        resolve(data);
+                    }
+                })[cmd](data);
+            });
+            cp.send({cmd: "exec", data: tree});
+        });
+
         doneLoading("扫描完成 ok");
         
         console.log(`目录最大深度:    ${maxDeep}层`);
