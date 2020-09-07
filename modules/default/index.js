@@ -22,7 +22,7 @@ module.exports = {
         p.dir && (param.dir = p.dir);
         p.output && (param.output = p.output);
         p.comment && (param.comment = p.comment);
-        p.excludes && (param.excludes = p.excludes.split("+"));
+        p.excludes && (param.excludes = ~p.excludes.indexOf("+") ? p.excludes.split("+") : p.excludes);
         p.depth && (param.depth = p.depth);
         
         let doneLoading = ch.loading("正在扫描目录...").stop;

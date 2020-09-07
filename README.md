@@ -1,168 +1,32 @@
-# sdtree （scan dir tree）目录树扫描工具
+# sdtree
 
-## 功能
-* 获取目录树字符串表示，可以附带指定文件注释
-* 获取目录树json格式
+<img src="https://img.shields.io/badge/platform-linux%20mac%20windows-green"/>
+<img src="https://img.shields.io/badge/version-2.1.0-green"/>
+<br><br>
 
-获取目录树（字符串表示）：
-```js
-sdtree
-│── .gitignore
-│── commander
-│   └── sdtree.js
-│── index.js
-│── lib
-│   │── buildTreeString.js
-│   │── getDirTree.js
-│   └── tools.js
-│── package-lock.json
-│── package.json
-│── README.md
-└── test
-    │── test.js
-    │── test.json
-    └── test.text
+这是一个目录树扫描命令行工具。   
+目前为止仅支持目录树扫描，具体的功能参数请看后面的使用示例。   
+如果不出意外，后面将会支持更多的功能，如查找，复制等等。 
 
-```
-获取目录树json：
-```js
-{
-    "sdtree": {
-        "name": "sdtree",
-        "type": "dir",
-        "childs": {
-            ".gitignore": {
-                "name": ".gitignore",
-                "type": "file"
-            },
-            "commander": {
-                "name": "commander",
-                "type": "dir",
-                "childs": {
-                    "sdtree.js": {
-                        "name": "sdtree.js",
-                        "type": "file"
-                    }
-                }
-            },
-            "index.js": {
-                "name": "index.js",
-                "type": "file"
-            },
-            "lib": {
-                "name": "lib",
-                "type": "dir",
-                "childs": {
-                    "buildTreeString.js": {
-                        "name": "buildTreeString.js",
-                        "type": "file"
-                    },
-                    "getDirTree.js": {
-                        "name": "getDirTree.js",
-                        "type": "file"
-                    },
-                    "tools.js": {
-                        "name": "tools.js",
-                        "type": "file"
-                    }
-                }
-            },
-            "package-lock.json": {
-                "name": "package-lock.json",
-                "type": "file"
-            },
-            "package.json": {
-                "name": "package.json",
-                "type": "file"
-            },
-            "README.md": {
-                "name": "README.md",
-                "type": "file"
-            },
-            "test": {
-                "name": "test",
-                "type": "dir",
-                "childs": {
-                    "test.js": {
-                        "name": "test.js",
-                        "type": "file"
-                    },
-                    "test.json": {
-                        "name": "test.json",
-                        "type": "file"
-                    },
-                    "test.text": {
-                        "name": "test.text",
-                        "type": "file"
-                    }
-                }
-            }
-        }
-    }
-}
-```
+## 安装
+有两种安装方式，从npm安装、从github安装。
+从npm安装：   
+```npm install -g sdtree```   
+从github安装（推荐）：   
+```npm install -g git+https://github.com/lilindog/sdtree```
 
+推荐从github安装，最新版本都首先更新到github。
 
-## 命令行用法
+## 用法
+* [获取目录树](./doc/default.md)
 
-从我的github安装（最新版都会先推到这里）
-> npm install -g git+https://github.com/lilindog/sdtree#master
+## 依赖
+该项目没有任何第三方依赖。   
+几个关键依赖均来自自己实现：   
+* [目录扫描支持](https://github.com/lilindog/filehelper)   
+* [命令行支持](https://github.com/lilindog/cmdhelper)
 
-从npm安装
-> npm install -g sdtree
+## 更多
+更多功能，不出意外，后续会陆续更新。   
+比如查找文件、复制文件等等。
 
-命令行参数：
->-d, --input    \<dir>        扫描目录路径, 缺省为当前目录<br>
->-o, --output   \<output>     目录树输出文件, 缺省会吧目录树信息打印到屏幕<br>
->-c, --comment  \<comment>    要提取的文件注释名字<br>
->-e, --excludes \<exculudes>  忽略文件/目录; 多个请使用 “+” 分隔，之间不能有空格
-
-示例：<br>
-$ sdtree -d E:\Documents\Desktop\sdtree -c summary -e node_modules+.git
-```js
-正在处理...
-处理完成！
-目录最大深度:    1层
-目录数量:       4个
-文件数量:       12个
-sdtree
-│── .gitignore
-│── commander
-│   └── sdtree.js
-│── index.js
-│── lib
-│   │── buildTreeString.js
-│   │── getDirTree.js
-│   └── tools.js
-│── package-lock.json
-│── package.json
-│── README.md
-└── test
-    │── test.js
-    │── test.json
-    └── test.text
-
-```
-## nodejs调用(api)用法
-
-获取目录树字符串表示<br>
-*getTreeStr(path[,options])*<br>
-. options {exclude: [], comment: ""}
-```js
-const
-sdtree = require("sdtree"),
-str = sdtree.getTreeStr("./dirpath", {exclude:["node_modules"], comment: "summary"});
-
-console.log(str); 
-```
-
-获取目录树json结构<br>
-*getTreeJson(path[,options])*<br>
-. options {exclude: [], comment: ""}
-```js
-const 
-sdtree = require("sdtree"),
-res = sdtree.getTreeJSON("./dirpath", {exclude:["node_modules"], comment: "summary"});
-
-console.log(res.tree);
-```
