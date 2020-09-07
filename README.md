@@ -1,7 +1,7 @@
 # sdtree
 
 <img src="https://img.shields.io/badge/platform-linux%20mac%20windows-green"/>
-<img src="https://img.shields.io/badge/version-2.1.0-green"/>
+<img src="https://img.shields.io/badge/version-2.1.1-green"/>
 
 这是一个目录树扫描命令行工具。   
 目前为止仅支持目录树扫描，具体的功能参数请看后面的使用示例。   
