@@ -29,7 +29,7 @@ module.exports = {
 
         const 
         { tree, maxDeep, fileNum, dirNum } = await new Promise((resolve, reject) => {
-            const cp = fork(__dirname + "/lib/getDirTreeAsyncScript.js");
+            const cp = fork(__dirname + "/lib/getDirTreeScript.js");
             let skipAll = false;
             cp.on("message", ({cmd, data}) => {
                 ({
@@ -61,7 +61,7 @@ module.exports = {
             cp.send({cmd: "exec", data: param});
         }),
         treeStr = await new Promise((resolve, reject) => {
-            const cp = fork(__dirname + "/lib/buildTreeStringAsyncScript.js");
+            const cp = fork(__dirname + "/lib/buildTreeStringScript.js");
             cp.on("message", ({cmd, data}) => {
                 ({
                     end (data) {
