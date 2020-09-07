@@ -9,8 +9,8 @@
 如果不出意外，后面将会支持更多的功能，如查找，复制等等。 
 
 ## 安装
-有两种安装方式，从npm安装、从github安装。
-从npm安装：   
+有两种安装方式，从npm安装、从github安装。   
+从npm安装：    
 ```npm install -g sdtree```   
 从github安装（推荐）：   
 ```npm install -g git+https://github.com/lilindog/sdtree```

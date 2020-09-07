@@ -6,7 +6,7 @@
 [-d, dir]       string `扫描目录路径, 缺省为当前目录`
 [-o, output]    string `目录树输出文件`
 [-c, comment]   string `要提取的文件注释名字`
-[-e, excludes]  string `忽略文件/目录;多个请使用半角逗号分隔，之间不能有空格`
+[-e, excludes]  string `忽略文件/目录;多个请使用+号连接，之间不能有空格`
 [-depth, depth] number `扫描深度, 非零整数`
 ```
 
