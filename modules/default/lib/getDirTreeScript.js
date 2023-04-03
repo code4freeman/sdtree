@@ -12,9 +12,13 @@ let maxDeep = 0, fileNum = 0, dirNum = 0, tree = null;
 function getComment (filePath, comment) {
     const 
     str = fs.readFileSync(filePath).toString(),
-    reg =  new RegExp(`${comment}\\s([^\\n]+)`);
-    let res = reg.exec(str);
-    return Array.isArray(res) && res.length >= 2 ? res[1] : "";
+    reg =  new RegExp( `${comment}\\s*((?:"([^"]+)")|(?:'([^']+)')|[^\\s\\n]+)` );
+    let commentText = (reg.exec(str) || [])[1];
+    if (!commentText) return "";
+    if (/^["'].*["']$/.test(commentText)) {
+        commentText = commentText.slice(1, -1);
+    }
+    return commentText;
 }
 
 /**
@@ -30,7 +34,7 @@ function init (options) {
         if (treeNode.type === scanNodeTypes.FILE) {
             if (comment) {
                 const cm = getComment(treeNode.path, comment);
-                cm && (treeNode.name += " //" + cm);
+                cm && (treeNode.name += " // " + cm);
             }
             fileNum++;
         }
